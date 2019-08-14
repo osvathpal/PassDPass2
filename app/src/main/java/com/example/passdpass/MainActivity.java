@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener); //Login checker
+        firebaseAuth.addAuthStateListener(authStateListener); //Login checker - --- -
     }
 
 }
