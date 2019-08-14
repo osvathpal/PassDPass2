@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
         btnAllLogIn = findViewById(R.id.button2);
         signIn = findViewById(R.id.TVSignIn);
 
-        authStateListener = new FirebaseAuth.AuthStateListener() {//Login checker
+        //Login checker - --- -
+
+        authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
