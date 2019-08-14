@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1067427581926",
+    "firebase_url": "https://passdpass-fff98.firebaseio.com",
+    "project_id": "passdpass-fff98",
+    "storage_bucket": "passdpass-fff98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067427581926:android:a7e49aeddcad4d8a",
+        "android_client_info": {
+          "package_name": "com.example.passdpass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067427581926-rj4gufuid83bjeamoedfhq8177sd4050.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.passdpass",
+            "certificate_hash": "6faf6c4a1199f6901ab52caa271ab60c1cb01590"
+          }
+        },
+        {
+          "client_id": "1067427581926-47g7qj1uuq9n8d89nrheporpkbbkgokh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5yU2Tp6OKh92kaPT1puh3Ih1N_kZak4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067427581926-921hifkjp3q47rh7dldd7renfn31gr4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
