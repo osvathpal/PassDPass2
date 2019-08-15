@@ -42,5 +42,7 @@
 
     <string name="ssid">SSID</string>
     <string name="add_and_connect">Add Network and Connect</string>
+    <string name="no_barcode_detected">No Barcode Detected</string>
+    <string name="scann_for_network">Scann for network</string>
 
 </resources>

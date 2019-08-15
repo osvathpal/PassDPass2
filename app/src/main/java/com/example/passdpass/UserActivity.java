@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -31,6 +35,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
@@ -50,6 +55,7 @@ public class UserActivity extends AppCompatActivity {
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
     Button btnConnect;
+    Button btnScan;
     String intentData = "";
     String intentData2 = "";
     boolean isWifi = false;
@@ -60,6 +66,14 @@ public class UserActivity extends AppCompatActivity {
     WifiConfiguration conf;
     WifiManager wifiManager;
 
+    List<ScanResult> results;
+    ArrayList<String> arrayList = new ArrayList<>();
+    ListView listView;
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,27 +83,16 @@ public class UserActivity extends AppCompatActivity {
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
 
         initViews();
+        scanWifi();
 
-// --- List for DUMMY Available Networks to be implemented later -------------------------
-        ListView listView = findViewById(R.id.networkListView);
-        ArrayList<String> arrayList = new ArrayList<>();
 
-        arrayList.add("Network one");
-        arrayList.add("Hálózat kettő");
-        arrayList.add("Retea Harom");
-        arrayList.add("Chicken Tyuk");
-        arrayList.add("Network one");
-        arrayList.add("Hálózat kettő");
-        arrayList.add("Retea Harom");
-        arrayList.add("Chicken Tyuk");
-        arrayList.add("Network one");
-        arrayList.add("Hálózat kettő");
-        arrayList.add("Retea Harom");
-        arrayList.add("Chicken Tyuk");
-
-        ArrayAdapter arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
-
-        listView.setAdapter(arrayAdapter);
+        btnScan = findViewById(R.id.btnScan);
+        btnScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanWifi();
+            }
+        });
 
 // --- Firebase Authentication ---------------------
         firebaseAuth = FirebaseAuth.getInstance();
@@ -112,7 +115,8 @@ public class UserActivity extends AppCompatActivity {
         });
 
     }
-// --- Barcode reader initialisation ---------------------
+
+    // Barcode  ->  SSID and Pass -> wifimanager
     private void initViews() {
        txtBarcodeValue= findViewById(R.id.txtBarcodeValue);
        surfaceView = findViewById(R.id.surfaceView);
@@ -147,7 +151,49 @@ public class UserActivity extends AppCompatActivity {
 
     }
 
+    private void scanWifi(){
+        //arrayList.clear();
+        registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        wifiManager.startScan();
+        Toast.makeText(this,"Scanning Wifi...", Toast.LENGTH_SHORT).show();
 
+    }
+
+    BroadcastReceiver wifiReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            results = wifiManager.getScanResults();
+            unregisterReceiver(this);
+
+            wifiManager.setWifiEnabled(true);
+
+            Iterator<ScanResult> it = results.iterator();
+
+            while (it.hasNext()) {
+
+
+                ScanResult tmp = it.next();
+                arrayList.add(tmp.SSID);
+
+                System.out.println("sajat net: "+tmp.SSID);
+            }
+
+            listView = findViewById(R.id.networkListView);
+
+            ArrayAdapter arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, arrayList);
+            listView.setAdapter(arrayAdapter);
+
+            for(String i: arrayList)
+            {
+                System.out.println("sajat net: "+i);
+            }
+
+        }
+    };
+
+
+// --- Barcode reader initialisation ---------------------
     private void initialiseDetectorsAndSources() {
 
         Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
