@@ -10,6 +10,7 @@ import android.hardware.Camera;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -35,36 +36,39 @@ import java.util.List;
 public class UserActivity extends AppCompatActivity {
 
     //Variables --------------------------------------------------------
-    SurfaceView surfaceView;
+
     Button btnLogOut;
-    Button btnConnect;
+
 
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     TextView email_display;
+
+    SurfaceView surfaceView;
+    TextView txtBarcodeValue;
+    private BarcodeDetector barcodeDetector;
+    private CameraSource cameraSource;
+    private static final int REQUEST_CAMERA_PERMISSION = 201;
+    Button btnConnect;
+    String intentData = "";
+    String intentData2 = "";
+    boolean isWifi = false;
 
     String ssid;
     String password;
     int type;
     WifiConfiguration conf;
     WifiManager wifiManager;
-    TextView txtBarcodeValue;
-    private BarcodeDetector barcodeDetector;
-    private CameraSource cameraSource;
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
-    String intentData = "";
-    boolean isWifi = false;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        initViews();
 
         conf = new WifiConfiguration();
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
+
+        initViews();
 
 // --- List for DUMMY Available Networks to be implemented later -------------------------
         ListView listView = findViewById(R.id.networkListView);
@@ -110,23 +114,40 @@ public class UserActivity extends AppCompatActivity {
     }
 // --- Barcode reader initialisation ---------------------
     private void initViews() {
-       surfaceView = findViewById(R.id.surfaceView);
        txtBarcodeValue= findViewById(R.id.txtBarcodeValue);
+       surfaceView = findViewById(R.id.surfaceView);
        btnConnect = findViewById(R.id.btnConnect);
-
 
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (intentData.length() > 0) {
-                    conf.SSID = ssid;
-                    conf.preSharedKey = password;
+                conf.SSID = ssid;
+                conf.preSharedKey = password;
+                conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                //conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                wifiManager.addNetwork(conf);
+
+                wifiManager.setWifiEnabled(true);
+
+                List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
+
+                for( WifiConfiguration i : list ) {
+                    if(i.SSID != null && i.SSID.equals(ssid)) {
+                        wifiManager.disconnect();
+                        wifiManager.enableNetwork(i.networkId, true);
+                        wifiManager.reconnect();
+                        break;
+                    }
                 }
+
+
             }
         });
 
 
     }
+
+
     private void initialiseDetectorsAndSources() {
 
         Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
@@ -136,12 +157,8 @@ public class UserActivity extends AppCompatActivity {
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setRequestedPreviewSize(1920, 1080)
-                .setAutoFocusEnabled(true) //you should add this feature
+                .setAutoFocusEnabled(true)
                 .build();
-
-            System.out.println("sajat net: " );
-
-
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -167,21 +184,49 @@ public class UserActivity extends AppCompatActivity {
             }
 
             @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-
+            public void surfaceDestroyed(SurfaceHolder holder)  {
+                cameraSource.stop();
             }
         });
 
-
-        btnConnect = findViewById(R.id.btnConnect);
-        btnConnect.setOnClickListener(new View.OnClickListener() {
+        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
-            public void onClick(View view) {
-                Intent switchIntent = new Intent(UserActivity.this, NetworkAdder.class);
-                startActivity(switchIntent);
+            public void release() {
+                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void receiveDetections(Detector.Detections<Barcode> detections) {
+                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+                if (barcodes.size() != 0) {
+                    txtBarcodeValue.post(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (barcodes.valueAt(0).wifi != null) {
+
+                                txtBarcodeValue.removeCallbacks(null);
+                                txtBarcodeValue.setText(barcodes.valueAt(0).wifi.ssid);
+                                ssid = barcodes.valueAt(0).wifi.ssid;
+                                password = barcodes.valueAt(0).wifi.password;
+                                type = barcodes.valueAt(0).wifi.encryptionType;
+
+                                intentData = barcodes.valueAt(0).wifi.ssid;
+                            } else {
+                                isWifi = false;
+                            }
+                        }
+                    });
+                }
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cameraSource.release();
     }
 
 

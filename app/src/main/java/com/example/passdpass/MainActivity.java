@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         signIn = findViewById(R.id.TVSignIn);
 
         //Login checker - --- -
-
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
