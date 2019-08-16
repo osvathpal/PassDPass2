@@ -12,6 +12,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -27,10 +28,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".NetworkAdder"
+
+        <activity
+            android:name=".ConnectShareList"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ConnectShareQR"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".NetworkAdder"
             android:parentActivityName=".MainActivity" />
 
         <activity android:name=".blank" />
+
         <activity
             android:name=".UserActivity"
             android:parentActivityName=".MainActivity" />

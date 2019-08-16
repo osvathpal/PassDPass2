@@ -58,6 +58,7 @@ public class UserActivity extends AppCompatActivity {
     Button btnScan;
     String intentData = "";
     String intentData2 = "";
+    int intentData3 = 0;
     boolean isWifi = false;
 
     String ssid;
@@ -163,10 +164,10 @@ public class UserActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            results = wifiManager.getScanResults();
             unregisterReceiver(this);
 
             wifiManager.setWifiEnabled(true);
+            results = wifiManager.getScanResults();
 
             Iterator<ScanResult> it = results.iterator();
 
@@ -176,7 +177,7 @@ public class UserActivity extends AppCompatActivity {
                 ScanResult tmp = it.next();
                 arrayList.add(tmp.SSID);
 
-                System.out.println("sajat net: "+tmp.SSID);
+                System.out.println("Available Networks: "+tmp.SSID);
             }
 
             listView = findViewById(R.id.networkListView);
@@ -186,7 +187,7 @@ public class UserActivity extends AppCompatActivity {
 
             for(String i: arrayList)
             {
-                System.out.println("sajat net: "+i);
+                System.out.println("Networks Displayed in list : "+i);
             }
 
         }
@@ -258,6 +259,11 @@ public class UserActivity extends AppCompatActivity {
                                 type = barcodes.valueAt(0).wifi.encryptionType;
 
                                 intentData = barcodes.valueAt(0).wifi.ssid;
+                                intentData2 = barcodes.valueAt(0).wifi.password;
+                                intentData3 = barcodes.valueAt(0).wifi.encryptionType;
+
+                                startActivity(new Intent(UserActivity.this, ConnectShareQR.class).putExtra("wifiSSID", intentData).putExtra("wifiPassword",intentData2).putExtra("type",intentData3));
+
                             } else {
                                 isWifi = false;
                             }
