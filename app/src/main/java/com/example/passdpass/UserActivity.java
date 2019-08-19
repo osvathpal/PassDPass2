@@ -54,7 +54,6 @@ public class UserActivity extends AppCompatActivity {
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnConnect;
     Button btnScan;
     String intentData = "";
     String intentData2 = "";
@@ -121,39 +120,9 @@ public class UserActivity extends AppCompatActivity {
     private void initViews() {
        txtBarcodeValue= findViewById(R.id.txtBarcodeValue);
        surfaceView = findViewById(R.id.surfaceView);
-       btnConnect = findViewById(R.id.btnConnect);
-
-        btnConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                conf.SSID = ssid;
-                conf.preSharedKey = password;
-                conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-                //conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-                wifiManager.addNetwork(conf);
-
-                wifiManager.setWifiEnabled(true);
-
-                List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
-
-                for( WifiConfiguration i : list ) {
-                    if(i.SSID != null && i.SSID.equals(ssid)) {
-                        wifiManager.disconnect();
-                        wifiManager.enableNetwork(i.networkId, true);
-                        wifiManager.reconnect();
-                        break;
-                    }
-                }
-
-
-            }
-        });
-
-
     }
 
     private void scanWifi(){
-        //arrayList.clear();
         registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         wifiManager.startScan();
         Toast.makeText(this,"Scanning Wifi...", Toast.LENGTH_SHORT).show();

@@ -44,5 +44,9 @@
     <string name="add_and_connect">Add Network and Connect</string>
     <string name="no_barcode_detected">No Barcode Detected</string>
     <string name="scann_for_network">Scann for network</string>
+    <string name="logout">Logout</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="or_connect_to_one_these">or Connect to one these</string>
+    <string name="my_saved_networks">My Saved Networks</string>
 
 </resources>

@@ -29,6 +29,7 @@ public class ConnectShareQR extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,7 @@ public class ConnectShareQR extends AppCompatActivity {
         if (getIntent().getStringExtra("wifiSSID") != null) {
             ssid = (getIntent().getStringExtra("wifiSSID"));
             password =(getIntent().getStringExtra("wifiPassword"));
-            type = (int) getIntent().getIntExtra("type", 0);
+            type = getIntent().getIntExtra("type", 0);
             qrSSID.setText(ssid);
             qrPassword.setText(password);
 
@@ -54,18 +55,19 @@ public class ConnectShareQR extends AppCompatActivity {
         btnAddAndConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                conf.SSID = ssid;
-                conf.preSharedKey = password;
-                conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-                conf.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-                conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+
+                conf.SSID = String.format("\"%s\"",ssid);
+                conf.preSharedKey = String.format("\"%s\"",password);
                 conf.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-                conf.networkId = 1;
+                conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+
+
+
 
 
                 wifiManager.addNetwork(conf);
                 wifiManager.setWifiEnabled(true);
-                System.out.println("Did it add the network: " + wifiManager.addNetwork(conf));
+
 
                 List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
 
@@ -78,16 +80,13 @@ public class ConnectShareQR extends AppCompatActivity {
                     }
                 }
 
+
+
                 listOfSavedWifis = wifiManager.getConfiguredNetworks();
 
                 for (WifiConfiguration tmp : listOfSavedWifis) {
-
-
                     System.out.println("Saved Networks: " + tmp.SSID);
                 }
-
-
-
 
             }
         });
