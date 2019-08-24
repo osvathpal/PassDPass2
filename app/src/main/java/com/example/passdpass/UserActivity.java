@@ -86,13 +86,6 @@ public class UserActivity extends AppCompatActivity {
         scanWifi();
 
 
-        btnScan = findViewById(R.id.btnScan);
-        btnScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scanWifi();
-            }
-        });
 
 // --- Firebase Authentication ---------------------
         firebaseAuth = FirebaseAuth.getInstance();
