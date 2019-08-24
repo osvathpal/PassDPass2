@@ -57,12 +57,6 @@ public class ConnectShareQR extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_share_qr);
 
-
-
-
-
-
-
         db = FirebaseFirestore.getInstance();
 
         qrSSID = findViewById(R.id.edTxtSSID);
@@ -80,7 +74,7 @@ public class ConnectShareQR extends AppCompatActivity {
             qrSSID.setText(ssid);
             qrPassword.setText(password);
 
-            /* - Barcode generation- */
+            /* - Barcode generation - */
             toBarcode = "WIFI:T:WPA;S:"+ssid+";P:"+password+";;";
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             try {

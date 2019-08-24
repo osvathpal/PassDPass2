@@ -18,6 +18,13 @@ public class WifiConfig {
         this.userId = userId;
     }
 
+    public WifiConfig(String ssid){
+        this.ssid = ssid;
+        this.password = "-N/A-";
+        this.type = 0;
+        this.userId = "-N/A-";
+    }
+
     public String getSsid() {
         return ssid;
     }

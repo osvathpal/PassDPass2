@@ -18,6 +18,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -42,8 +43,11 @@ public class UserActivity extends AppCompatActivity {
 
     //Variables --------------------------------------------------------
 
-    Button btnLogOut;
 
+    public static final String WIFI_SSID = "ssid";
+
+
+    Button btnLogOut;
 
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -70,6 +74,8 @@ public class UserActivity extends AppCompatActivity {
     ArrayList<String> arrayList = new ArrayList<>();
     ListView listView;
 
+    ListView listViewWifis;
+    List<WifiConfig> wifiList;
 
 
 
@@ -85,7 +91,21 @@ public class UserActivity extends AppCompatActivity {
         initViews();
         scanWifi();
 
+        listViewWifis = findViewById(R.id.networkListView);
+        wifiList = new ArrayList<>();
 
+        listViewWifis.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                WifiConfig wifiConfig = wifiList.get(position);
+
+                Intent intent = new Intent(UserActivity.this, ConnectShareList.class);
+                intent.putExtra(WIFI_SSID, wifiConfig.getSsid());
+
+                startActivity(intent);
+
+            }
+        });
 
 // --- Firebase Authentication ---------------------
         firebaseAuth = FirebaseAuth.getInstance();
@@ -106,6 +126,10 @@ public class UserActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
 
     }
 
@@ -134,18 +158,16 @@ public class UserActivity extends AppCompatActivity {
             Iterator<ScanResult> it = results.iterator();
 
             while (it.hasNext()) {
-
-
                 ScanResult tmp = it.next();
-                arrayList.add(tmp.SSID);
+                WifiConfig wifiConfig = new WifiConfig();
+                wifiConfig.setSsid(tmp.SSID);
 
+                wifiList.add(wifiConfig);
                 System.out.println("Available Networks: "+tmp.SSID);
             }
 
-            listView = findViewById(R.id.networkListView);
-
-            ArrayAdapter arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, arrayList);
-            listView.setAdapter(arrayAdapter);
+            WifiList adapter = new WifiList(UserActivity.this, wifiList);
+            listViewWifis.setAdapter(adapter);
 
             for(String i: arrayList)
             {
@@ -154,6 +176,7 @@ public class UserActivity extends AppCompatActivity {
 
         }
     };
+
 
 
 // --- Barcode reader initialisation ---------------------

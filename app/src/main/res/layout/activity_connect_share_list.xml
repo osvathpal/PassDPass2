@@ -71,7 +71,7 @@
         android:cursorVisible="true"
         android:ems="10"
         android:inputType="textVisiblePassword|textPassword"
-        android:text="@string/password"
+        android:hint="Enter Password"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
