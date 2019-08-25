@@ -125,8 +125,8 @@ public class ConnectShareQR extends AppCompatActivity {
 
                 conf.SSID = String.format("\"%s\"",ssid);
                 conf.preSharedKey = String.format("\"%s\"",password);
-                conf.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-                conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+
+
 
                 wifiManager.addNetwork(conf);
                 wifiManager.setWifiEnabled(true);
@@ -148,7 +148,7 @@ public class ConnectShareQR extends AppCompatActivity {
                 listOfSavedWifis = wifiManager.getConfiguredNetworks();
 
                 for (WifiConfiguration tmp : listOfSavedWifis) {
-                    System.out.println("Saved Networks: " + tmp.SSID);
+                    System.out.println("Saved Networks: " + tmp.SSID + " Pass: " + tmp.preSharedKey);
                 }
 
             }

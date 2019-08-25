@@ -58,7 +58,7 @@ public class UserActivity extends AppCompatActivity {
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnScan;
+    Button btnMyNetworks;
     String intentData = "";
     String intentData2 = "";
     int intentData3 = 0;
@@ -73,7 +73,6 @@ public class UserActivity extends AppCompatActivity {
     List<ScanResult> results;
     ArrayList<String> arrayList = new ArrayList<>();
     ListView listView;
-
     ListView listViewWifis;
     List<WifiConfig> wifiList;
 
@@ -115,21 +114,28 @@ public class UserActivity extends AppCompatActivity {
         email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
         btnLogOut = findViewById(R.id.btnLogOut);
+        btnMyNetworks = findViewById(R.id.btnMySavedNetwork);
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 FirebaseAuth.getInstance().signOut();
-                Intent I = new Intent(UserActivity.this, ActivityLogin.class);
-                startActivity(I);
+                Intent intent = new Intent(UserActivity.this, ActivityLogin.class);
+                startActivity(intent);
 
             }
         });
 
 
+        btnMyNetworks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserActivity.this, MySavedNetworks.class);
+                startActivity(intent);
 
-
+            }
+        });
 
     }
 
