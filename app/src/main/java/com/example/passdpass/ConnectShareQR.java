@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,8 +26,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 public class ConnectShareQR extends AppCompatActivity {
@@ -62,11 +58,11 @@ public class ConnectShareQR extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        qrSSID = findViewById(R.id.edTxtSSID);
-        qrPassword = findViewById(R.id.edTxtPassword);
-        btnAddAndConnect = findViewById(R.id.add_and_connect);
-        btnShare = findViewById(R.id.btnShare);
-        qrImage = findViewById(R.id.QR_Image);
+        qrSSID = findViewById(R.id.edTxtSSID_MN);
+        qrPassword = findViewById(R.id.edTxtPassword_MN);
+        btnAddAndConnect = findViewById(R.id.update_and_connect_MN);
+        btnShare = findViewById(R.id.btnShare_MN);
+        qrImage = findViewById(R.id.QR_Image_MN);
 
         conf = new WifiConfiguration();
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);

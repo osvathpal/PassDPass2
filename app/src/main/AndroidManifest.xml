@@ -27,7 +27,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MySavedNetworks"></activity>
+        <activity android:name=".MyNetwork"></activity>
+        <activity android:name=".MySavedNetworks" />
         <activity
             android:name=".ConnectShareList"
             android:parentActivityName=".MainActivity" />

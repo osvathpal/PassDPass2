@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -34,12 +35,15 @@ public class MySavedNetworks extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+
         listViewWifis = findViewById(R.id.mySavedNetworkListView);
         wifiList = new ArrayList<>();
 
         final WifiList adapter = new WifiList(MySavedNetworks.this, wifiList);
 
-        db.collection("wifis").whereEqualTo("userId", "gA7D6lO9Q2WDycEZsqSTpfnQH0i1").get()
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        db.collection("wifis").whereEqualTo("userId", userID).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -67,12 +71,12 @@ public class MySavedNetworks extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WifiConfig wifiConfig = wifiList.get(position);
 
-                Intent intent = new Intent(MySavedNetworks.this, ConnectShareQR.class);
+                //Intent intent = new Intent(MySavedNetworks.this, ConnectShareQR.class);
                 intentData = wifiConfig.getSsid();
                 intentData2 = wifiConfig.getPassword();
                 intentData3 = wifiConfig.getType();
 
-                startActivity(new Intent(MySavedNetworks.this, ConnectShareQR.class).putExtra("wifiSSID", intentData).putExtra("wifiPassword",intentData2).putExtra("type",intentData3));
+                startActivity(new Intent(MySavedNetworks.this, MyNetwork.class).putExtra("wifiSSID", intentData).putExtra("wifiPassword",intentData2).putExtra("type",intentData3));
 
             }
         });

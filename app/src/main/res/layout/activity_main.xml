@@ -65,6 +65,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/or_use_these"
         android:textAlignment="center"
+        android:visibility="invisible"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,11 +78,11 @@
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toStartOf="@+id/buttonFacebookLogin"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="gone" />
+        tools:visibility="gone"
+        android:visibility="invisible"/>
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/buttonFacebookLogin"
@@ -89,7 +90,8 @@
         android:layout_height="76dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"/>
 
 
 
@@ -102,7 +104,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent" />
+
 
 
 
