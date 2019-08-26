@@ -58,7 +58,7 @@ public class ConnectShareList extends AppCompatActivity {
         qrSSID = findViewById(R.id.edTxtSSID_list);
         qrPassword = findViewById(R.id.edTxtPassword_list);
         btnAddAndConnect = findViewById(R.id.add_and_connect_list);
-        btnGenerateQR = findViewById(R.id.generate_QR_list);
+        btnGenerateQR = findViewById(R.id.btnShare);
         qrImage = findViewById(R.id.QR_Image_list);
 
         ssid = (getIntent().getStringExtra("ssid"));

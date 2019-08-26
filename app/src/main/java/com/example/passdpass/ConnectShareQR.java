@@ -3,6 +3,7 @@ package com.example.passdpass;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
@@ -38,6 +39,7 @@ public class ConnectShareQR extends AppCompatActivity {
     String password;
     int type;
     String toBarcode;
+    String toShare;
     ImageView qrImage;
     String wifiID;
 
@@ -46,6 +48,7 @@ public class ConnectShareQR extends AppCompatActivity {
     EditText qrSSID;
     EditText qrPassword;
     Button btnAddAndConnect;
+    Button btnShare;
     List<WifiConfiguration> listOfSavedWifis;
 
     FirebaseAuth firebaseAuth;
@@ -62,6 +65,7 @@ public class ConnectShareQR extends AppCompatActivity {
         qrSSID = findViewById(R.id.edTxtSSID);
         qrPassword = findViewById(R.id.edTxtPassword);
         btnAddAndConnect = findViewById(R.id.add_and_connect);
+        btnShare = findViewById(R.id.btnShare);
         qrImage = findViewById(R.id.QR_Image);
 
         conf = new WifiConfiguration();
@@ -92,6 +96,22 @@ public class ConnectShareQR extends AppCompatActivity {
 
 
          }
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toShare = "The Wifi: "+ssid+"\n"+" The Password: "+password+"";
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Sharing Wifi");
+                intent.putExtra(Intent.EXTRA_TEXT, toShare);
+                startActivity(Intent.createChooser(intent, "Share Wifi"));
+
+
+            }
+        });
+
+
         btnAddAndConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
