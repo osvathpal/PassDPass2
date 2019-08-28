@@ -27,6 +27,8 @@ public class MySavedNetworks extends AppCompatActivity {
     String intentData = "";
     String intentData2 = "";
     int intentData3 = 0;
+    String intentData4 = "";
+    String intentData5 = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class MySavedNetworks extends AppCompatActivity {
                             for(DocumentSnapshot d: list){
 
                                 WifiConfig wf = d.toObject(WifiConfig.class);
+                                wf.setId(d.getId());
                                 wifiList.add(wf);
                                 adapter.notifyDataSetChanged();
 
@@ -75,8 +78,11 @@ public class MySavedNetworks extends AppCompatActivity {
                 intentData = wifiConfig.getSsid();
                 intentData2 = wifiConfig.getPassword();
                 intentData3 = wifiConfig.getType();
+                intentData4 = wifiConfig.getUserId();
 
-                startActivity(new Intent(MySavedNetworks.this, MyNetwork.class).putExtra("wifiSSID", intentData).putExtra("wifiPassword",intentData2).putExtra("type",intentData3));
+                intentData5 = wifiConfig.getId();
+
+                startActivity(new Intent(MySavedNetworks.this, MyNetwork.class).putExtra("wifiSSID", intentData).putExtra("wifiPassword",intentData2).putExtra("type",intentData3).putExtra("userId", intentData4).putExtra("wifiID", intentData5));
 
             }
         });

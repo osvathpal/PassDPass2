@@ -7,6 +7,7 @@ public class WifiConfig {
     private int type;
     private String userId;
 
+    private String id;
 
     public WifiConfig() {
     }
@@ -23,6 +24,14 @@ public class WifiConfig {
         this.password = "-N/A-";
         this.type = 0;
         this.userId = "-N/A-";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getSsid() {

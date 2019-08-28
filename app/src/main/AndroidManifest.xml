@@ -27,8 +27,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MyNetwork"></activity>
-        <activity android:name=".MySavedNetworks" />
+        <activity
+            android:name=".MyNetwork"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MySavedNetworks"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ConnectShareList"
             android:parentActivityName=".MainActivity" />
@@ -39,6 +43,7 @@
             android:name=".NetworkAdder"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".blank" />
+
         <activity
             android:name=".UserActivity"
             android:parentActivityName=".MainActivity" />
