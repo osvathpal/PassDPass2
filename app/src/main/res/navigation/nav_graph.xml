@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mySavedNetworks">
+
+    <activity
+        android:id="@+id/mySavedNetworks"
+        android:name="com.example.passdpass.MySavedNetworks"
+        android:label="activity_my_saved_networks"
+        tools:layout="@layout/activity_my_saved_networks" />
+    <activity
+        android:id="@+id/networksOnPhone"
+        android:name="com.example.passdpass.NetworksOnPhone"
+        android:label="activity_networks_on_phone"
+        tools:layout="@layout/activity_networks_on_phone" />
+</navigation>

@@ -47,9 +47,12 @@
     <string name="logout">Logout</string>
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="or_connect_to_one_these">or Connect to one these</string>
-    <string name="my_saved_networks">My Saved Networks</string>
+    <string name="my_saved_networks">My Saved Wifis</string>
     <string name="generate_qr_code">Generate QR Code</string>
     <string name="share_other">Share via other apps</string>
     <string name="update_and_connect">Update and/or Connect</string>
+    <string name="delete_wifi">Delete Wifi</string>
+    <string name="add_all_wifis_to_phone">Add all Wifis to Phone</string>
+    <string name="wifis_on_phone">Wifis On Phone</string>
 
 </resources>

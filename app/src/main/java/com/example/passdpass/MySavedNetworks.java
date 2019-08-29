@@ -35,6 +35,7 @@ public class MySavedNetworks extends AppCompatActivity {
     TextView email_display;
     FirebaseAuth firebaseAuth;
     Button btnLogOut;
+    Button wifisOnPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class MySavedNetworks extends AppCompatActivity {
         email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
         btnLogOut = findViewById(R.id.btnLogOut);
+        wifisOnPhone = findViewById(R.id.wifisOnPhone);
 
 
         listViewWifis = findViewById(R.id.mySavedNetworkListView);
@@ -69,6 +71,12 @@ public class MySavedNetworks extends AppCompatActivity {
             }
         });
 
+        wifisOnPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MySavedNetworks.this, NetworksOnPhone.class));
+            }
+        });
 
 
         db.collection("wifis").whereEqualTo("userId", userID).get()

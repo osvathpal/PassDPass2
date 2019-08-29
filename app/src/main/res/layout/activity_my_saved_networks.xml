@@ -56,27 +56,27 @@
         app:layout_constraintTop_toBottomOf="@+id/emailID_UA" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/wifisOnPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Networks On Phone"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button5"
-        app:layout_constraintEnd_toStartOf="@+id/button5"
+        android:text="@string/wifis_on_phone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/addAllWifis"
+        app:layout_constraintEnd_toStartOf="@+id/addAllWifis"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/addAllWifis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Save to Phone"
+        android:text="@string/add_all_wifis_to_phone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button3" />
+        app:layout_constraintStart_toEndOf="@+id/wifisOnPhone" />
 
     <ListView
         android:id="@+id/mySavedNetworkListView"
@@ -90,7 +90,7 @@
         android:clickable="true"
         android:focusable="true"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/wifisOnPhone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
