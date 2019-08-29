@@ -50,6 +50,6 @@
     <string name="my_saved_networks">My Saved Networks</string>
     <string name="generate_qr_code">Generate QR Code</string>
     <string name="share_other">Share via other apps</string>
-    <string name="update_and_connect">Update and Connect</string>
+    <string name="update_and_connect">Update and/or Connect</string>
 
 </resources>
