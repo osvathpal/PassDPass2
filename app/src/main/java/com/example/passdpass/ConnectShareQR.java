@@ -55,6 +55,7 @@ public class ConnectShareQR extends AppCompatActivity {
     EditText qrPassword;
     Button btnAddAndConnect;
     Button btnShare;
+    Button btnLogOut;
     List<WifiConfiguration> listOfSavedWifis;
     List<WifiConfig> wifiList;
     int checkSaved = 0;
@@ -74,8 +75,6 @@ public class ConnectShareQR extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String curentemail = user.getEmail();
-
-
         email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
 
@@ -86,6 +85,7 @@ public class ConnectShareQR extends AppCompatActivity {
         qrPassword = findViewById(R.id.edTxtPassword_MN);
         btnAddAndConnect = findViewById(R.id.update_and_connect_MN);
         btnShare = findViewById(R.id.btnShare_MN);
+        btnLogOut = findViewById(R.id.btnLogOut);
         qrImage = findViewById(R.id.QR_Image_MN);
 
         conf = new WifiConfiguration();
@@ -134,6 +134,16 @@ public class ConnectShareQR extends AppCompatActivity {
             }
         });
 
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(ConnectShareQR.this, ActivityLogin.class);
+                startActivity(intent);
+
+            }
+        });
 
         btnAddAndConnect.setOnClickListener(new View.OnClickListener() {
             @Override

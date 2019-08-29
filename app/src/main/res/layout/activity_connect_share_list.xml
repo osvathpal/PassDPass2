@@ -42,7 +42,8 @@
         android:text="Logout"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
 
 
 
@@ -101,27 +102,39 @@
 
     <Button
         android:id="@+id/add_and_connect_list"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/add_and_connect"
-        app:layout_constraintEnd_toStartOf="@+id/btnShare_MN"
+        app:layout_constraintEnd_toStartOf="@+id/btnGenerateQR_list"
+        app:layout_constraintHorizontal_bias="0.673"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edTxtPassword_list" />
 
     <Button
-        android:id="@+id/btnShare_MN"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnGenerateQR_list"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/generate_qr_code"
         app:layout_constraintBaseline_toBaselineOf="@+id/add_and_connect_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintEnd_toStartOf="@+id/btnShare_MN"
         app:layout_constraintStart_toEndOf="@+id/add_and_connect_list" />
+
+    <Button
+        android:id="@+id/btnShare_MN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/share_other"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnGenerateQR_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintStart_toEndOf="@+id/btnGenerateQR_list" />
 
     <ImageView
         android:id="@+id/QR_Image_list"

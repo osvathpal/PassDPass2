@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,6 +32,9 @@ public class MySavedNetworks extends AppCompatActivity {
     int intentData3 = 0;
     String intentData4 = "";
     String intentData5 = "";
+    TextView email_display;
+    FirebaseAuth firebaseAuth;
+    Button btnLogOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +43,13 @@ public class MySavedNetworks extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String curentemail = user.getEmail();
+        email_display = findViewById(R.id.emailID_UA);
+        email_display.setText(curentemail);
+        btnLogOut = findViewById(R.id.btnLogOut);
+
 
         listViewWifis = findViewById(R.id.mySavedNetworkListView);
         wifiList = new ArrayList<>();
@@ -44,6 +57,19 @@ public class MySavedNetworks extends AppCompatActivity {
         final WifiList adapter = new WifiList(MySavedNetworks.this, wifiList);
 
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MySavedNetworks.this, ActivityLogin.class);
+                startActivity(intent);
+
+            }
+        });
+
+
 
         db.collection("wifis").whereEqualTo("userId", userID).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

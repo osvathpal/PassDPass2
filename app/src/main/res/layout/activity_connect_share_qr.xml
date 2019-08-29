@@ -42,7 +42,8 @@
         android:text="Logout"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
 
     <EditText
         android:id="@+id/edTxtSSID_MN"

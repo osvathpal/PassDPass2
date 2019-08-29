@@ -3,6 +3,7 @@ package com.example.passdpass;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -11,11 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +35,7 @@ public class ConnectShareList extends AppCompatActivity {
     String password;
     int type;
     String toBarcode;
+    String toShare;
     ImageView qrImage;
     String wifiID;
 
@@ -41,11 +45,13 @@ public class ConnectShareList extends AppCompatActivity {
     EditText qrPassword;
     Button btnAddAndConnect;
     Button btnGenerateQR;
+    Button btnShare;
     List<WifiConfiguration> listOfSavedWifis;
 
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseFirestore db;
+    private TextView email_display;
 
 
     @Override
@@ -55,10 +61,17 @@ public class ConnectShareList extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String curentemail = user.getEmail();
+        email_display = findViewById(R.id.emailID_UA);
+        email_display.setText(curentemail);
+
         qrSSID = findViewById(R.id.edTxtSSID_list);
         qrPassword = findViewById(R.id.edTxtPassword_list);
         btnAddAndConnect = findViewById(R.id.add_and_connect_list);
-        btnGenerateQR = findViewById(R.id.btnShare_MN);
+        btnGenerateQR = findViewById(R.id.btnGenerateQR_list);
+        btnShare = findViewById(R.id.btnShare_MN);
         qrImage = findViewById(R.id.QR_Image_list);
 
         ssid = (getIntent().getStringExtra("ssid"));
@@ -69,6 +82,19 @@ public class ConnectShareList extends AppCompatActivity {
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
 
 
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toShare = "The Wifi: " + ssid + "\n" + " The Password: " + password + "";
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Sharing Wifi");
+                intent.putExtra(Intent.EXTRA_TEXT, toShare);
+                startActivity(Intent.createChooser(intent, "Share Wifi"));
+
+
+            }
+        });
 
         btnGenerateQR.setOnClickListener(new View.OnClickListener() {
             @Override
