@@ -1,9 +1,12 @@
 package com.example.passdpass;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -21,6 +24,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +79,7 @@ public class MyNetwork extends AppCompatActivity {
 
         qrSSID = findViewById(R.id.edTxtSSID_MN);
         qrPassword = findViewById(R.id.edTxtPassword_MN);
-
+        qrImage = findViewById(R.id.QR_Image_MN);
 
         btnUpdateConnect =findViewById(R.id.update_and_connect_MN);
         btnShare = findViewById(R.id.btnShare_MN);
@@ -88,6 +96,9 @@ public class MyNetwork extends AppCompatActivity {
         qrSSID.setText(ssid);
         qrPassword.setText(password);
 
+        conf = new WifiConfiguration();
+        wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
+        wifiManager.setWifiEnabled(true);
 
 
 
@@ -96,6 +107,8 @@ public class MyNetwork extends AppCompatActivity {
             public void onClick(View v) {
 
                 wifiList = new ArrayList<>();
+
+
 
                 passwordUpdate = qrPassword.getText().toString().trim();
 
@@ -118,26 +131,7 @@ public class MyNetwork extends AppCompatActivity {
                             }
                         });
 
-
-
-
-
-                /*--------add ---
-                dbWifis.add(wifiConfig)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Toast.makeText(MyNetwork.this, "Wifi Config added to Database", Toast.LENGTH_LONG).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MyNetwork.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-
+                /*--- ADD local ---*/
 
                 conf.SSID = String.format("\"%s\"", ssid);
                 conf.preSharedKey = String.format("\"%s\"", password);
@@ -156,7 +150,7 @@ public class MyNetwork extends AppCompatActivity {
                         wifiManager.reconnect();
                         break;
                     }
-                }-------------*/
+                }
                 startActivity(new Intent(MyNetwork.this, MySavedNetworks.class));
 
 
@@ -164,6 +158,33 @@ public class MyNetwork extends AppCompatActivity {
             }
         });
 
+        btnGenerateQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                password = qrPassword.getText().toString().trim();
+                System.out.println("SSID: " + ssid + " Pass: "+ password );
+                if(password.length()> 7){
+
+                    toBarcode = "WIFI:T:WPA;S:"+ssid+";P:"+password+";;";
+                    MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+                    try {
+                        BitMatrix bitMatrix = multiFormatWriter.encode(toBarcode, BarcodeFormat.QR_CODE, 500, 500);
+                        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+                        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+
+                        qrImage.setImageBitmap(bitmap);
+
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                else{
+                    Toast.makeText(MyNetwork.this, "Please enter a valid password", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
 
@@ -183,6 +204,47 @@ public class MyNetwork extends AppCompatActivity {
             }
         });
 
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(MyNetwork.this);
+                builder.setTitle("Are you sure you want to delete this wifi " + ssid + " ?");
+                builder.setMessage(" Deleteion is permanent!");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        WifiConfig wifiConfig = new WifiConfig();
+                        wifiConfig.setId(wifiID);
+                        db.collection("wifis").document(wifiConfig.getId())
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(MyNetwork.this, "Wifi "+ ssid + " deleted from Database", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                        startActivity(new Intent(MyNetwork.this, MySavedNetworks.class));
+
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+
+                AlertDialog ad = builder.create();
+                ad.show();
+
+
+            }
+        });
 
 
 
