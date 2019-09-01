@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +32,10 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +59,7 @@ public class MyNetwork extends AppCompatActivity {
     Button btnShare;
     Button btnGenerateQR;
     Button btnDelete;
+    Bitmap bitmap;
 
     List<WifiConfig> wifiList;
 
@@ -171,9 +178,10 @@ public class MyNetwork extends AppCompatActivity {
                     try {
                         BitMatrix bitMatrix = multiFormatWriter.encode(toBarcode, BarcodeFormat.QR_CODE, 500, 500);
                         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                        Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                        bitmap = barcodeEncoder.createBitmap(bitMatrix);
 
                         qrImage.setImageBitmap(bitmap);
+
 
                     } catch (WriterException e) {
                         e.printStackTrace();
@@ -183,8 +191,56 @@ public class MyNetwork extends AppCompatActivity {
                 else{
                     Toast.makeText(MyNetwork.this, "Please enter a valid password", Toast.LENGTH_LONG).show();
                 }
+
             }
         });
+
+
+        qrImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+
+                String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                        "/PassDPass";
+                File dir = new File(file_path);
+                if(!dir.exists())
+                    dir.mkdirs();
+                // File file = new File(dir, "Wifi_"+ssid+".jpg");
+                File file = new File(dir, "Wifi_QR_"+ssid+".jpg");
+                FileOutputStream fOut = null;
+
+                try {
+                    fOut = new FileOutputStream(file);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+
+                    fOut.flush();
+                    fOut.close();
+                }
+                 catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Toast.makeText(MyNetwork.this, "QR Code saved to Phone", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("image/*");
+                file_path = Environment.getExternalStorageDirectory()+
+                        "/PassDPass/Wifi_QR_"+ssid+".jpg";
+
+                File imageFileToShare = new File(file_path);
+
+                Uri uri = Uri.fromFile(imageFileToShare);
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+
+                startActivity(Intent.createChooser(intent, "Share Wifi via"));
+                return false;
+            }
+        });
+
+
 
 
 
