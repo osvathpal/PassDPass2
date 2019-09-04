@@ -143,7 +143,7 @@ public class ConnectShareList extends AppCompatActivity {
         btnAddAndConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                password = qrPassword.getText().toString().trim();
                 if(password.length()> 7){
                 wifiID = ssid;
                 String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
