@@ -52,7 +52,8 @@
     <string name="share_other">Share via other apps</string>
     <string name="update_and_connect">Update and/or Connect</string>
     <string name="delete_wifi">Delete Wifi</string>
-    <string name="add_all_wifis_to_phone">Add all Wifis to Phone</string>
+    <string name="add_all_wifis_to_phone">Add all Wifis from DataBase to Phone</string>
     <string name="wifis_on_phone">Wifis On Phone</string>
+    <string name="long_click_to_save_and_send_qr_code_image">long click to save and send QR Code image</string>
 
 </resources>

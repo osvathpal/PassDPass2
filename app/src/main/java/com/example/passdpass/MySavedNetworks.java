@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +38,7 @@ public class MySavedNetworks extends AppCompatActivity {
     Button btnLogOut;
     Button wifisOnPhone;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,7 @@ public class MySavedNetworks extends AppCompatActivity {
         email_display.setText(curentemail);
         btnLogOut = findViewById(R.id.btnLogOut);
         wifisOnPhone = findViewById(R.id.wifisOnPhone);
+
 
 
         listViewWifis = findViewById(R.id.mySavedNetworkListView);
@@ -70,6 +73,8 @@ public class MySavedNetworks extends AppCompatActivity {
 
             }
         });
+
+
 
         wifisOnPhone.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -29,17 +29,17 @@
         android:clickable="true"
         android:focusable="true"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/addAllWifis"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_NP" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/addAllWifis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="Button"
+        android:text="@string/add_all_wifis_to_phone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

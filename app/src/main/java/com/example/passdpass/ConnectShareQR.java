@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +35,10 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +61,7 @@ public class ConnectShareQR extends AppCompatActivity {
     Button btnAddAndConnect;
     Button btnShare;
     Button btnLogOut;
+
     List<WifiConfiguration> listOfSavedWifis;
     List<WifiConfig> wifiList;
     int checkSaved = 0;
@@ -66,6 +72,10 @@ public class ConnectShareQR extends AppCompatActivity {
     private FirebaseFirestore  db;
 
     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+    Bitmap bitmap;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,15 +117,12 @@ public class ConnectShareQR extends AppCompatActivity {
             try {
                 BitMatrix bitMatrix = multiFormatWriter.encode(toBarcode, BarcodeFormat.QR_CODE, 500, 500);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-
+                bitmap = barcodeEncoder.createBitmap(bitMatrix);
                 qrImage.setImageBitmap(bitmap);
 
             } catch (WriterException e) {
                 e.printStackTrace();
             }
-
-
         }
 
         verifyWifi(ssid);
@@ -179,7 +186,6 @@ public class ConnectShareQR extends AppCompatActivity {
 
                 conf.SSID = String.format("\"%s\"", ssid);
                 conf.preSharedKey = String.format("\"%s\"", password);
-
 
                 wifiManager.addNetwork(conf);
                 wifiManager.setWifiEnabled(true);
