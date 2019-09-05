@@ -20,9 +20,9 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     public EditText emailId, passwd;
-    Button btnSignUp;
-    TextView signIn;
-    FirebaseAuth firebaseAuth;
+    private Button btnSignUp;
+    private TextView signIn;
+    private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
 

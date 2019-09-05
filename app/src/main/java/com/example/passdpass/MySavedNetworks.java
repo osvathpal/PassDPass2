@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,17 +24,15 @@ public class MySavedNetworks extends AppCompatActivity {
 
 
     private FirebaseFirestore db;
-    ListView listViewWifis;
-    List<WifiConfig> wifiList;
-    String intentData = "";
-    String intentData2 = "";
-    int intentData3 = 0;
-    String intentData4 = "";
-    String intentData5 = "";
-    TextView email_display;
-    FirebaseAuth firebaseAuth;
-    Button btnLogOut;
-    Button wifisOnPhone;
+    private ListView listViewWifis;
+    private List<WifiConfig> wifiList;
+    private String intentData = "";
+    private String intentData2 = "";
+    private int intentData3 = 0;
+    private String intentData4 = "";
+    private String intentData5 = "";
+    private TextView email_display;
+    private FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -50,8 +47,8 @@ public class MySavedNetworks extends AppCompatActivity {
         String curentemail = user.getEmail();
         email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
-        btnLogOut = findViewById(R.id.btnLogOut);
-        wifisOnPhone = findViewById(R.id.wifisOnPhone);
+        Button btnLogOut = findViewById(R.id.btnLogOut);
+        Button wifisOnPhone = findViewById(R.id.wifisOnPhone);
 
 
 
@@ -112,7 +109,7 @@ public class MySavedNetworks extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WifiConfig wifiConfig = wifiList.get(position);
 
-                //Intent intent = new Intent(MySavedNetworks.this, ConnectShareQR.class);
+
                 intentData = wifiConfig.getSsid();
                 intentData2 = wifiConfig.getPassword();
                 intentData3 = wifiConfig.getType();

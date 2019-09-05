@@ -1,6 +1,6 @@
 package com.example.passdpass;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,12 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -41,31 +38,30 @@ import java.util.List;
 
 public class MyNetwork extends AppCompatActivity {
 
-    String ssid;
-    String password;
-    String passwordUpdate;
-    int type;
-    String toBarcode;
-    String toShare;
-    ImageView qrImage;
-    String wifiID;
+    private  String ssid;
+    private  String password;
+    private  String passwordUpdate;
+    private  int type;
+    private  String toBarcode;
+    private  String toShare;
+    private  ImageView qrImage;
+    private  String wifiID;
 
-    WifiConfiguration conf;
-    WifiManager wifiManager;
-    TextView qrSSID;
-    EditText qrPassword;
-    Button btnUpdateConnect;
-    Button btnShare;
-    Button btnGenerateQR;
-    Button btnDelete;
-    Bitmap bitmap;
+    private  WifiConfiguration conf;
+    private  WifiManager wifiManager;
+    private  TextView qrSSID;
+    private  EditText qrPassword;
+    private  Button btnUpdateConnect;
+    private  Button btnShare;
+    private  Button btnGenerateQR;
+    private  Button btnDelete;
+    private  Bitmap bitmap;
 
-    List<WifiConfig> wifiList;
+    private  List<WifiConfig> wifiList;
 
-    TextView email_display;
-    FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
-    private FirebaseFirestore db;
+    private  TextView email_display;
+    private  FirebaseAuth firebaseAuth;
+    private  FirebaseFirestore db;
 
     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 

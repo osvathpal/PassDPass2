@@ -2,8 +2,6 @@ package com.example.passdpass;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -26,13 +24,12 @@ public class NetworksOnPhone extends AppCompatActivity {
 
 
     private FirebaseFirestore db;
-    WifiManager wifiManager;
-    List<ScanResult> results;
-    ListView listViewWifis;
-    List<WifiConfig> wifiList;
-    List<WifiConfiguration> savedWifisList;
-    Button addAllWifis;
-    WifiConfiguration conf;
+    private WifiManager wifiManager;
+    private ListView listViewWifis;
+    private List<WifiConfig> wifiList;
+    private List<WifiConfiguration> savedWifisList;
+    private Button addAllWifis;
+    private WifiConfiguration conf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

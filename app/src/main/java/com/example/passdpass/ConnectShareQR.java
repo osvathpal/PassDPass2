@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,44 +33,37 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectShareQR extends AppCompatActivity {
 
     private static final String TAG = "PassDPass";
-    String ssid;
-    String password;
-    int type;
-    String toBarcode;
-    String toShare;
-    ImageView qrImage;
-    String wifiID;
+    private String ssid;
+    private  String password;
+    private  int type;
+    private  String toBarcode;
+    private  String toShare;
+    private  ImageView qrImage;
+    private  String wifiID;
 
-    WifiConfiguration conf;
-    WifiManager wifiManager;
-    EditText qrSSID;
-    EditText qrPassword;
-    Button btnAddAndConnect;
-    Button btnShare;
-    Button btnLogOut;
+    private  WifiConfiguration conf;
+    private  WifiManager wifiManager;
+    private  EditText qrSSID;
+    private  EditText qrPassword;
+    private  Button btnAddAndConnect;
+    private  Button btnShare;
+    private  Button btnLogOut;
 
-    List<WifiConfiguration> listOfSavedWifis;
-    List<WifiConfig> wifiList;
-    int checkSaved = 0;
+    private  List<WifiConfiguration> listOfSavedWifis;
+    private  List<WifiConfig> wifiList;
+    private  int checkSaved = 0;
 
-    TextView email_display;
-    FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
+    private TextView email_display;
+    private FirebaseAuth firebaseAuth;
     private FirebaseFirestore  db;
-
-    String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-    Bitmap bitmap;
+    private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private Bitmap bitmap;
 
 
 

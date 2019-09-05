@@ -45,34 +45,28 @@ public class UserActivity extends AppCompatActivity {
     public static final String WIFI_SSID = "ssid";
 
 
-    Button btnLogOut;
-
-    FirebaseAuth firebaseAuth;
-    TextView email_display;
-
-    SurfaceView surfaceView;
-    TextView txtBarcodeValue;
+    private Button btnLogOut;
+    private FirebaseAuth firebaseAuth;
+    private TextView email_display;
+    private SurfaceView surfaceView;
+    private TextView txtBarcodeValue;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnMyNetworks;
-    String intentData = "";
-    String intentData2 = "";
-    int intentData3 = 0;
-    boolean isWifi = false;
-
-    String ssid;
-    String password;
-    int type;
-    WifiConfiguration conf;
-    WifiManager wifiManager;
-
-    List<ScanResult> results;
-    ArrayList<String> arrayList = new ArrayList<>();
-    ListView listViewWifis;
-    List<WifiConfig> wifiList;
-
-
+    private Button btnMyNetworks;
+    private String intentData = "";
+    private String intentData2 = "";
+    private int intentData3 = 0;
+    private boolean isWifi = false;
+    private String ssid;
+    private String password;
+    private int type;
+    private WifiConfiguration conf;
+    private WifiManager wifiManager;
+    private List<ScanResult> results;
+    private ArrayList<String> arrayList = new ArrayList<>();
+    private ListView listViewWifis;
+    private List<WifiConfig> wifiList;
 
 
     @Override

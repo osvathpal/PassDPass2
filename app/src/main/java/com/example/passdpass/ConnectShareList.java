@@ -56,13 +56,10 @@ public class ConnectShareList extends AppCompatActivity {
     Button btnShare;
     List<WifiConfiguration> listOfSavedWifis;
 
-    FirebaseAuth firebaseAuth;
-    //private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseFirestore db;
-    private TextView email_display;
-    List<WifiConfig> wifiList;
-    int checkSaved = 0;
-    String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private List<WifiConfig> wifiList;
+    private int checkSaved = 0;
+    private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +68,10 @@ public class ConnectShareList extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String curentemail = user.getEmail();
-        email_display = findViewById(R.id.emailID_UA);
+        TextView email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
 
         qrSSID = findViewById(R.id.edTxtSSID_list);
