@@ -44,25 +44,14 @@
             android:name=".ConnectShareQR"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".NetworkAdder"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".blank" />
-        <activity
             android:name=".UserActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ActivityLogin"
             android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".FirebaseUIActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".GoogleSignInActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:parentActivityName=".MainActivity" />
+
+
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -57,7 +57,7 @@ public class ConnectShareList extends AppCompatActivity {
     List<WifiConfiguration> listOfSavedWifis;
 
     FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
+    //private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseFirestore db;
     private TextView email_display;
     List<WifiConfig> wifiList;

@@ -45,7 +45,6 @@ public class MyNetwork extends AppCompatActivity {
     String password;
     String passwordUpdate;
     int type;
-    String userId;
     String toBarcode;
     String toShare;
     ImageView qrImage;

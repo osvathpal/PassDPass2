@@ -52,7 +52,6 @@ public class ConnectShareQR extends AppCompatActivity {
     String toShare;
     ImageView qrImage;
     String wifiID;
-    int isItSaved=0;
 
     WifiConfiguration conf;
     WifiManager wifiManager;

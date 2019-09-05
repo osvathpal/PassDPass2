@@ -25,7 +25,6 @@ public class MySavedNetworks extends AppCompatActivity {
 
 
     private FirebaseFirestore db;
-    ArrayList<String> arrayList = new ArrayList<>();
     ListView listViewWifis;
     List<WifiConfig> wifiList;
     String intentData = "";

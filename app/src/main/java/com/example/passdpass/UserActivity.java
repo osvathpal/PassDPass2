@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -19,7 +18,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,7 +48,6 @@ public class UserActivity extends AppCompatActivity {
     Button btnLogOut;
 
     FirebaseAuth firebaseAuth;
-    private FirebaseAuth.AuthStateListener authStateListener;
     TextView email_display;
 
     SurfaceView surfaceView;
@@ -72,7 +69,6 @@ public class UserActivity extends AppCompatActivity {
 
     List<ScanResult> results;
     ArrayList<String> arrayList = new ArrayList<>();
-    ListView listView;
     ListView listViewWifis;
     List<WifiConfig> wifiList;
 

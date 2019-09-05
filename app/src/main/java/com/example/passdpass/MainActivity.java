@@ -10,8 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     public EditText emailId, passwd;
     Button btnSignUp;
-    Button btnAllLogIn;
     TextView signIn;
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -37,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         emailId = findViewById(R.id.ETemail);
         passwd = findViewById(R.id.ETpassword);
         btnSignUp = findViewById(R.id.btnSignUp);
-        btnAllLogIn = findViewById(R.id.button2);
         signIn = findViewById(R.id.TVSignIn);
 
         //Login checker - --- -
@@ -103,13 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(switchIntent);
             }
         });
-        btnAllLogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent switchIntent = new Intent(MainActivity.this, GoogleSignInActivity.class);
-                startActivity(switchIntent);
-            }
-        });
+
 
         }
 
