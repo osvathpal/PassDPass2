@@ -42,51 +42,35 @@ public class ConnectShareQR extends AppCompatActivity {
     private String ssid;
     private  String password;
     private  int type;
-    private  String toBarcode;
     private  String toShare;
-    private  ImageView qrImage;
     private  String wifiID;
-
     private  WifiConfiguration conf;
     private  WifiManager wifiManager;
-    private  EditText qrSSID;
-    private  EditText qrPassword;
-    private  Button btnAddAndConnect;
-    private  Button btnShare;
-    private  Button btnLogOut;
-
     private  List<WifiConfiguration> listOfSavedWifis;
     private  List<WifiConfig> wifiList;
     private  int checkSaved = 0;
-
-    private TextView email_display;
-    private FirebaseAuth firebaseAuth;
     private FirebaseFirestore  db;
     private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    private Bitmap bitmap;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_share_qr);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String curentemail = user.getEmail();
-        email_display = findViewById(R.id.emailID_UA);
+        TextView email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
 
 
         db = FirebaseFirestore.getInstance();
 
-        qrSSID = findViewById(R.id.edTxtSSID_MN);
-        qrPassword = findViewById(R.id.edTxtPassword_MN);
-        btnAddAndConnect = findViewById(R.id.update_and_connect_MN);
-        btnShare = findViewById(R.id.btnShare_MN);
-        btnLogOut = findViewById(R.id.btnLogOut);
-        qrImage = findViewById(R.id.QR_Image_MN);
+        EditText qrSSID = findViewById(R.id.edTxtSSID_MN);
+        EditText qrPassword = findViewById(R.id.edTxtPassword_MN);
+        Button btnAddAndConnect = findViewById(R.id.update_and_connect_MN);
+        Button btnShare = findViewById(R.id.btnShare_MN);
+        ImageView qrImage = findViewById(R.id.QR_Image_MN);
 
         conf = new WifiConfiguration();
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
@@ -102,12 +86,12 @@ public class ConnectShareQR extends AppCompatActivity {
             qrPassword.setText(password);
 
             /* - Barcode generation - */
-            toBarcode = "WIFI:T:WPA;S:" + ssid + ";P:" + password + ";;";
+            String toBarcode = "WIFI:T:WPA;S:" + ssid + ";P:" + password + ";;";
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             try {
                 BitMatrix bitMatrix = multiFormatWriter.encode(toBarcode, BarcodeFormat.QR_CODE, 500, 500);
                 BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-                bitmap = barcodeEncoder.createBitmap(bitMatrix);
+                Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                 qrImage.setImageBitmap(bitmap);
 
             } catch (WriterException e) {
@@ -131,16 +115,6 @@ public class ConnectShareQR extends AppCompatActivity {
             }
         });
 
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(ConnectShareQR.this, ActivityLogin.class);
-                startActivity(intent);
-
-            }
-        });
 
         btnAddAndConnect.setOnClickListener(new View.OnClickListener() {
             @Override

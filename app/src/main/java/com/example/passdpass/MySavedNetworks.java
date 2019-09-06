@@ -20,39 +20,33 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySavedNetworks extends AppCompatActivity {
+    public class MySavedNetworks extends AppCompatActivity {
 
-
-    private FirebaseFirestore db;
-    private ListView listViewWifis;
     private List<WifiConfig> wifiList;
     private String intentData = "";
     private String intentData2 = "";
     private int intentData3 = 0;
     private String intentData4 = "";
     private String intentData5 = "";
-    private TextView email_display;
-    private FirebaseAuth firebaseAuth;
 
 
-    @Override
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_saved_networks);
 
-        db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String curentemail = user.getEmail();
-        email_display = findViewById(R.id.emailID_UA);
+        TextView email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
         Button btnLogOut = findViewById(R.id.btnLogOut);
-        Button wifisOnPhone = findViewById(R.id.wifisOnPhone);
+            Button wifisOnPhone = findViewById(R.id.wifisOnPhone);
 
 
-
-        listViewWifis = findViewById(R.id.mySavedNetworkListView);
+        ListView listViewWifis = findViewById(R.id.mySavedNetworkListView);
         wifiList = new ArrayList<>();
 
         final WifiList adapter = new WifiList(MySavedNetworks.this, wifiList);

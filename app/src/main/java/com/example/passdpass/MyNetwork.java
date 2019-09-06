@@ -46,21 +46,11 @@ public class MyNetwork extends AppCompatActivity {
     private  String toShare;
     private  ImageView qrImage;
     private  String wifiID;
-
     private  WifiConfiguration conf;
     private  WifiManager wifiManager;
-    private  TextView qrSSID;
     private  EditText qrPassword;
-    private  Button btnUpdateConnect;
-    private  Button btnShare;
-    private  Button btnGenerateQR;
-    private  Button btnDelete;
     private  Bitmap bitmap;
-
     private  List<WifiConfig> wifiList;
-
-    private  TextView email_display;
-    private  FirebaseAuth firebaseAuth;
     private  FirebaseFirestore db;
 
     String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -70,23 +60,23 @@ public class MyNetwork extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_network);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String curentemail = user.getEmail();
-        email_display = findViewById(R.id.emailID_UA);
+        TextView email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
 
 
         db = FirebaseFirestore.getInstance();
 
-        qrSSID = findViewById(R.id.edTxtSSID_MN);
+        TextView qrSSID = findViewById(R.id.edTxtSSID_MN);
         qrPassword = findViewById(R.id.edTxtPassword_MN);
         qrImage = findViewById(R.id.QR_Image_MN);
 
-        btnUpdateConnect =findViewById(R.id.update_and_connect_MN);
-        btnShare = findViewById(R.id.btnShare_MN);
-        btnGenerateQR = findViewById(R.id.btnGenerateQR_MN);
-        btnDelete = findViewById(R.id.btnDelete);
+        Button btnUpdateConnect = findViewById(R.id.update_and_connect_MN);
+        Button btnShare = findViewById(R.id.btnShare_MN);
+        Button btnGenerateQR = findViewById(R.id.btnGenerateQR_MN);
+        Button btnDelete = findViewById(R.id.btnDelete);
 
         ssid = (getIntent().getStringExtra("wifiSSID"));
         password =(getIntent().getStringExtra("wifiPassword"));

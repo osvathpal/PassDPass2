@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.SparseArray;
@@ -41,19 +40,12 @@ public class UserActivity extends AppCompatActivity {
 
     //Variables --------------------------------------------------------
 
-
     public static final String WIFI_SSID = "ssid";
 
-
-    private Button btnLogOut;
-    private FirebaseAuth firebaseAuth;
-    private TextView email_display;
     private SurfaceView surfaceView;
     private TextView txtBarcodeValue;
-    private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    private Button btnMyNetworks;
     private String intentData = "";
     private String intentData2 = "";
     private int intentData3 = 0;
@@ -61,20 +53,17 @@ public class UserActivity extends AppCompatActivity {
     private String ssid;
     private String password;
     private int type;
-    private WifiConfiguration conf;
     private WifiManager wifiManager;
-    private List<ScanResult> results;
     private ArrayList<String> arrayList = new ArrayList<>();
     private ListView listViewWifis;
     private List<WifiConfig> wifiList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        conf = new WifiConfiguration();
+        //WifiConfiguration conf = new WifiConfiguration();
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
 
         initViews();
@@ -87,24 +76,21 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WifiConfig wifiConfig = wifiList.get(position);
-
                 Intent intent = new Intent(UserActivity.this, ConnectShareList.class);
                 intent.putExtra(WIFI_SSID, wifiConfig.getSsid());
-
                 startActivity(intent);
-
             }
         });
 
 // --- Firebase Authentication ---------------------
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
         String curentemail = user.getEmail();
 
-        email_display = findViewById(R.id.emailID_UA);
+        TextView email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
-        btnLogOut = findViewById(R.id.btnLogOut);
-        btnMyNetworks = findViewById(R.id.btnMySavedNetwork);
+        Button btnLogOut = findViewById(R.id.btnLogOut);
+        Button btnMyNetworks = findViewById(R.id.btnMySavedNetwork);
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +99,6 @@ public class UserActivity extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(UserActivity.this, ActivityLogin.class);
                 startActivity(intent);
-
             }
         });
 
@@ -123,7 +108,6 @@ public class UserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(UserActivity.this, MySavedNetworks.class);
                 startActivity(intent);
-
             }
         });
 
@@ -149,7 +133,7 @@ public class UserActivity extends AppCompatActivity {
             unregisterReceiver(this);
 
             wifiManager.setWifiEnabled(true);
-            results = wifiManager.getScanResults();
+            List<ScanResult> results = wifiManager.getScanResults();
 
             Iterator<ScanResult> it = results.iterator();
 
@@ -179,7 +163,7 @@ public class UserActivity extends AppCompatActivity {
     private void initialiseDetectorsAndSources() {
 
         Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
-        barcodeDetector = new BarcodeDetector.Builder(this)
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 

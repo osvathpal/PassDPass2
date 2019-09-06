@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -27,8 +26,6 @@ public class NetworksOnPhone extends AppCompatActivity {
     private WifiManager wifiManager;
     private ListView listViewWifis;
     private List<WifiConfig> wifiList;
-    private List<WifiConfiguration> savedWifisList;
-    private Button addAllWifis;
     private WifiConfiguration conf;
 
     @Override
@@ -41,10 +38,10 @@ public class NetworksOnPhone extends AppCompatActivity {
 
         listViewWifis = findViewById(R.id.wifisOnPhone);
         wifiList = new ArrayList<>();
-        savedWifisList = new ArrayList<>();
+        List<WifiConfiguration> savedWifisList = new ArrayList<>();
         wifiManager.setWifiEnabled(true);
         savedWifisList = wifiManager.getConfiguredNetworks();
-        addAllWifis = findViewById(R.id.addAllWifis);
+        Button addAllWifis = findViewById(R.id.addAllWifis);
         conf = new WifiConfiguration();
 
         Iterator<WifiConfiguration> it = savedWifisList.iterator();

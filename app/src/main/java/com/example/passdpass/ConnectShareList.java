@@ -46,7 +46,6 @@ public class ConnectShareList extends AppCompatActivity {
     String toShare;
     ImageView qrImage;
     String wifiID;
-
     WifiConfiguration conf;
     WifiManager wifiManager;
     EditText qrSSID;

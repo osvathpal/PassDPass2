@@ -32,21 +32,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="-dummy-mail-address-" />
 
-
-    <Button
-        android:id="@+id/btnLogOut"
-        android:layout_width="78dp"
-        android:layout_height="35dp"
-        android:layout_margin="4dp"
-        android:layout_marginEnd="4dp"
-        android:text="Logout"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="invisible"/>
-
-
-
     <EditText
         android:id="@+id/edTxtSSID_list"
         android:layout_width="wrap_content"

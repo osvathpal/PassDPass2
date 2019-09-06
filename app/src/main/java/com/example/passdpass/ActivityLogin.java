@@ -19,8 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ActivityLogin extends AppCompatActivity {
     public EditText loginEmailId, logInpasswd;
-    private Button btnLogIn;
-    private TextView signup;
 
     FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -33,8 +31,8 @@ public class ActivityLogin extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         loginEmailId = findViewById(R.id.loginEmail);
         logInpasswd = findViewById(R.id.loginpaswd);
-        btnLogIn = findViewById(R.id.btnLogIn);
-        signup = findViewById(R.id.TVSignIn);
+        Button btnLogIn = findViewById(R.id.btnLogIn);
+        TextView signup = findViewById(R.id.TVSignIn);
 
 
 

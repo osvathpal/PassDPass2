@@ -20,11 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity {
 
     public EditText emailId, passwd;
-    private Button btnSignUp;
-    private TextView signIn;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         emailId = findViewById(R.id.ETemail);
         passwd = findViewById(R.id.ETpassword);
-        btnSignUp = findViewById(R.id.btnSignUp);
-        signIn = findViewById(R.id.TVSignIn);
+        Button btnSignUp = findViewById(R.id.btnSignUp);
+        TextView signIn = findViewById(R.id.TVSignIn);
 
         //Login checker - --- -
         authStateListener = new FirebaseAuth.AuthStateListener() {
