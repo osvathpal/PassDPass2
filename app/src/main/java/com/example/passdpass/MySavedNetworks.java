@@ -102,8 +102,6 @@ import java.util.List;
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 WifiConfig wifiConfig = wifiList.get(position);
-
-
                 intentData = wifiConfig.getSsid();
                 intentData2 = wifiConfig.getPassword();
                 intentData3 = wifiConfig.getType();

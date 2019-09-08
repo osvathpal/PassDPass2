@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    public EditText emailId, passwd;
+    public  EditText emailId, passwd;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
@@ -47,9 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(MainActivity.this, "Login to continue", Toast.LENGTH_SHORT).show();
                 }
-
             }
-
         };
 
 

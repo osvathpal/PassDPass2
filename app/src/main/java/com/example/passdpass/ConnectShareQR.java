@@ -110,8 +110,6 @@ public class ConnectShareQR extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Sharing Wifi");
                 intent.putExtra(Intent.EXTRA_TEXT, toShare);
                 startActivity(Intent.createChooser(intent, "Share Wifi"));
-
-
             }
         });
 
@@ -150,7 +148,6 @@ public class ConnectShareQR extends AppCompatActivity {
 
                 conf.SSID = String.format("\"%s\"", ssid);
                 conf.preSharedKey = String.format("\"%s\"", password);
-
                 wifiManager.addNetwork(conf);
                 wifiManager.setWifiEnabled(true);
 
@@ -185,37 +182,18 @@ public class ConnectShareQR extends AppCompatActivity {
 
         wifiList = new ArrayList<>();
 
-        db.collection("wifis").whereEqualTo("userId", userID).get()
+        db.collection("wifis").whereEqualTo("userId", userID).whereEqualTo("ssid", ssid).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData()+ " => " + wifiList.size() );
-                                WifiConfig wf = document.toObject(WifiConfig.class);
-                                wifiList.add(wf);
-
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        if (task.getResult().isEmpty()) { checkSaved = 0;}
+                        else{
+                        checkSaved = 1;
+                        Toast.makeText(ConnectShareQR.this, "Wifi already in Database...", Toast.LENGTH_LONG).show();
                         }
-                        int i=1;
-                        for (WifiConfig wf : wifiList) {
-                            String tempSSID = wf.getSsid();
-                            if (tempSSID.equals(ssid)) {
-                                checkSaved = 1;
-                                Toast.makeText(ConnectShareQR.this, "Wifi already in Database..." + i, Toast.LENGTH_LONG).show();
-                                i++;
-                            }
-                        }
-
                     }
                 });
-
-
-
-
         return checkSaved;
     }
 

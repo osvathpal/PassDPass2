@@ -92,6 +92,7 @@ public class ConnectShareList extends AppCompatActivity {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ssid = qrSSID.getText().toString().trim();
                 password = qrPassword.getText().toString().trim();
                 if(password.length()> 7) {
                     toShare = "The Wifi: " + ssid + "\n" + " The Password: " + password + "";
@@ -111,7 +112,7 @@ public class ConnectShareList extends AppCompatActivity {
         btnGenerateQR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ssid = qrSSID.getText().toString().trim();
                 password = qrPassword.getText().toString().trim();
                 System.out.println("SSID: " + ssid + " Pass: "+ password );
                 if(password.length()> 7){
@@ -139,6 +140,7 @@ public class ConnectShareList extends AppCompatActivity {
         btnAddAndConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ssid = qrSSID.getText().toString().trim();
                 password = qrPassword.getText().toString().trim();
                 if(password.length()> 7){
                 wifiID = ssid;
@@ -209,39 +211,20 @@ public class ConnectShareList extends AppCompatActivity {
 
     int verifyWifi(final String ssid){
 
-        wifiList = new ArrayList<>();
-
-        db.collection("wifis").whereEqualTo("userId", userID).get()
+            db.collection("wifis").whereEqualTo("userId", userID).whereEqualTo("ssid", ssid).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData()+ " => " + wifiList.size() );
-                                WifiConfig wf = document.toObject(WifiConfig.class);
-                                wifiList.add(wf);
-
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        if (task.getResult().isEmpty()) {
+                            checkSaved = 0;
                         }
-                        int i=1;
-                        for (WifiConfig wf : wifiList) {
-                            String tempSSID = wf.getSsid();
-                            if (tempSSID.equals(ssid)) {
-                                checkSaved = 1;
-                                Toast.makeText(ConnectShareList.this, "Wifi already in Database..." + i, Toast.LENGTH_LONG).show();
-                                i++;
-                            }
+                        else{
+                            checkSaved = 1;
+                            Toast.makeText(ConnectShareList.this, "Wifi already in Database...", Toast.LENGTH_LONG).show();
                         }
-
                     }
                 });
-
-
-
-
         return checkSaved;
     }
 

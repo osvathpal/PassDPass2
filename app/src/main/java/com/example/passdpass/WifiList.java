@@ -30,18 +30,10 @@ public class WifiList extends ArrayAdapter<WifiConfig> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-
         View listViewItem = inflater.inflate(R.layout.list_view, null, true);
-
         TextView textViewSsid = listViewItem.findViewById(R.id.textViewSSID);
-
-
         WifiConfig wifiConfig = wifiList.get(position);
-
         textViewSsid.setText(wifiConfig.getSsid());
-
-
-
         return listViewItem;
     }
 }
