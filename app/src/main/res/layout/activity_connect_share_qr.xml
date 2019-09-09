@@ -57,6 +57,7 @@
         android:layout_marginEnd="8dp"
         android:contextClickable="false"
         android:cursorVisible="false"
+        android:editable="false"
         android:inputType="none"
         android:ems="10"
         android:text="@string/password"

@@ -30,28 +30,25 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".NetworksOnPhone"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MySavedNetworks" />
         <activity
             android:name=".MyNetwork"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MySavedNetworks" />
         <activity
             android:name=".MySavedNetworks"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".UserActivity" />
         <activity
             android:name=".ConnectShareList"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".UserActivity" />
         <activity
             android:name=".ConnectShareQR"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".UserActivity" />
         <activity
             android:name=".UserActivity"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ActivityLogin"
             android:parentActivityName=".MainActivity" />
-
-
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -99,11 +99,7 @@ public class MyNetwork extends AppCompatActivity {
             public void onClick(View v) {
 
                 wifiList = new ArrayList<>();
-
-
-
                 passwordUpdate = qrPassword.getText().toString().trim();
-
                 WifiConfig wifiConfig = new WifiConfig();
                 wifiConfig.setSsid(ssid);
                 wifiConfig.setPassword(passwordUpdate);
@@ -154,7 +150,7 @@ public class MyNetwork extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                password = qrPassword.getText().toString().trim();
+                passwordUpdate = qrPassword.getText().toString().trim();
                 System.out.println("SSID: " + ssid + " Pass: "+ password );
                 if(password.length()> 7){
 
@@ -191,14 +187,12 @@ public class MyNetwork extends AppCompatActivity {
                 File dir = new File(file_path);
                 if(!dir.exists())
                     dir.mkdirs();
-                // File file = new File(dir, "Wifi_"+ssid+".jpg");
-                File file = new File(dir, "Wifi_QR_"+ssid+".jpg");
+                    File file = new File(dir, "Wifi_QR_"+ssid+".jpg");
                 FileOutputStream fOut = null;
 
                 try {
                     fOut = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-
                     fOut.flush();
                     fOut.close();
                 }
@@ -216,25 +210,18 @@ public class MyNetwork extends AppCompatActivity {
                         "/PassDPass/Wifi_QR_"+ssid+".jpg";
 
                 File imageFileToShare = new File(file_path);
-
                 Uri uri = Uri.fromFile(imageFileToShare);
                 intent.putExtra(Intent.EXTRA_STREAM, uri);
-
-                startActivity(Intent.createChooser(intent, "Share Wifi via"));
+                startActivity(Intent.createChooser(intent, "Share QR Code via"));
                 return false;
             }
         });
 
-
-
-
-
-
-
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toShare = "The Wifi: " + ssid + "\n" + " The Password: " + password + "";
+                passwordUpdate = qrPassword.getText().toString().trim();
+                toShare = "The Wifi: " + ssid + "\n" + " The Password: " + passwordUpdate + "";
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Sharing Wifi");
@@ -255,7 +242,6 @@ public class MyNetwork extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         WifiConfig wifiConfig = new WifiConfig();
                         wifiConfig.setId(wifiID);
                         db.collection("wifis").document(wifiConfig.getId())
@@ -266,29 +252,19 @@ public class MyNetwork extends AppCompatActivity {
                                         Toast.makeText(MyNetwork.this, "Wifi "+ ssid + " deleted from Database", Toast.LENGTH_LONG).show();
                                     }
                                 });
-
                         startActivity(new Intent(MyNetwork.this, MySavedNetworks.class));
-
-
                     }
                 });
+
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
                 });
-
-
                 AlertDialog ad = builder.create();
                 ad.show();
-
-
             }
         });
-
-
-
-
     }
 }

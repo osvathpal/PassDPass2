@@ -253,6 +253,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         initialiseDetectorsAndSources();
+        scanWifi();
     }
 
 

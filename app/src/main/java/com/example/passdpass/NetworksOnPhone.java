@@ -38,17 +38,17 @@ public class NetworksOnPhone extends AppCompatActivity {
         wifiList = new ArrayList<>();
         List<WifiConfiguration> savedWifisList = new ArrayList<>();
         wifiManager.setWifiEnabled(true);
-        savedWifisList = wifiManager.getConfiguredNetworks();
+
         Button addAllWifis = findViewById(R.id.addAllWifis);
         conf = new WifiConfiguration();
 
+        savedWifisList = wifiManager.getConfiguredNetworks();
         Iterator<WifiConfiguration> it = savedWifisList.iterator();
 
         while (it.hasNext()) {
             WifiConfiguration tmp = it.next();
             WifiConfig wifiConfig = new WifiConfig();
             wifiConfig.setSsid(tmp.SSID);
-
             wifiList.add(wifiConfig);
             System.out.println("Available Networks: "+tmp.SSID);
         }
@@ -86,13 +86,10 @@ public class NetworksOnPhone extends AppCompatActivity {
 
                                 conf.SSID = String.format("\"%s\"", wf.getSsid());
                                 conf.preSharedKey = String.format("\"%s\"", wf.getPassword());
-
                                 wifiManager.addNetwork(conf);
-
                                 wifiList.add(wf);
 
                                 adapter.notifyDataSetChanged();
-
                                 System.out.println("My saved network: " + wf.getSsid());
                             }
 

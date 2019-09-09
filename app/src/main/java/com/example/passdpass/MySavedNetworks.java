@@ -35,15 +35,14 @@ import java.util.List;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_saved_networks);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+       FirebaseFirestore db = FirebaseFirestore.getInstance();
+       FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+       FirebaseUser user = firebaseAuth.getCurrentUser();
         String curentemail = user.getEmail();
         TextView email_display = findViewById(R.id.emailID_UA);
         email_display.setText(curentemail);
         Button btnLogOut = findViewById(R.id.btnLogOut);
-            Button wifisOnPhone = findViewById(R.id.wifisOnPhone);
+        Button wifisOnPhone = findViewById(R.id.wifisOnPhone);
 
 
         ListView listViewWifis = findViewById(R.id.mySavedNetworkListView);
@@ -74,23 +73,22 @@ import java.util.List;
         });
 
 
+
+
+
+
         db.collection("wifis").whereEqualTo("userId", userID).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-
                         if(!queryDocumentSnapshots.isEmpty()){
                             List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
                             for(DocumentSnapshot d: list){
-
                                 WifiConfig wf = d.toObject(WifiConfig.class);
                                 wf.setId(d.getId());
                                 wifiList.add(wf);
                                 adapter.notifyDataSetChanged();
-
-                                System.out.println("My saved network: " + wf.getSsid());
                             }
-
                         }
                     }
                 });
@@ -106,7 +104,6 @@ import java.util.List;
                 intentData2 = wifiConfig.getPassword();
                 intentData3 = wifiConfig.getType();
                 intentData4 = wifiConfig.getUserId();
-
                 intentData5 = wifiConfig.getId();
 
                 startActivity(new Intent(MySavedNetworks.this, MyNetwork.class).putExtra("wifiSSID", intentData).putExtra("wifiPassword",intentData2).putExtra("type",intentData3).putExtra("userId", intentData4).putExtra("wifiID", intentData5));
