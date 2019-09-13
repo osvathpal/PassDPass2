@@ -3,6 +3,7 @@ package com.example.passdpass;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -151,10 +152,10 @@ public class MyNetwork extends AppCompatActivity {
             public void onClick(View v) {
 
                 passwordUpdate = qrPassword.getText().toString().trim();
-                System.out.println("SSID: " + ssid + " Pass: "+ password );
+                System.out.println("SSID: " + ssid + " Pass: "+ passwordUpdate );
                 if(password.length()> 7){
 
-                    toBarcode = "WIFI:T:WPA;S:"+ssid+";P:"+password+";;";
+                    toBarcode = "WIFI:T:WPA;S:"+ssid+";P:"+passwordUpdate+";;";
                     MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                     try {
                         BitMatrix bitMatrix = multiFormatWriter.encode(toBarcode, BarcodeFormat.QR_CODE, 500, 500);
@@ -210,8 +211,9 @@ public class MyNetwork extends AppCompatActivity {
                         "/PassDPass/Wifi_QR_"+ssid+".jpg";
 
                 File imageFileToShare = new File(file_path);
-                Uri uri = Uri.fromFile(imageFileToShare);
-                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                //Uri uri = Uri.fromFile(imageFileToShare);
+                Uri apkuri = FileProvider.getUriForFile(getApplicationContext(), getPackageName() + ".provider",imageFileToShare);
+                intent.putExtra(Intent.EXTRA_STREAM, apkuri);
                 startActivity(Intent.createChooser(intent, "Share QR Code via"));
                 return false;
             }
